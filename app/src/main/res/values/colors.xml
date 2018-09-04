@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2E3034</color>
+    <color name="colorPrimaryDark">#2E3034</color>
+    <color name="colorAccent">#2E3034</color>
+
+    <color name="common">#2E3034</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="transparent_80_white">#80FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent_80">#80000000</color>
+
+    <color name="tab_indicator_color">#EF5C61</color>
+    <color name="btn_border_color">#DDDDDD</color>
+    <color name="divider_line">#E7E7E7</color>
+    <color name="common_background">#F5F5F5</color>
+    <color name="common_background_f3">#F3F3F3</color>
+    <color name="cb_background_normal">#F6F6F6</color>
+    <color name="btn_background_gray">#F0F0F0</color>
+
+    <color name="color_orange_low">#F5A623</color>
+    <color name="color_orange">#F08327</color>
+    <color name="color_orange_dark">#D07528</color>
+
+    <color name="text_color_dark">#999999</color>
+    <color name="text_color_middle">#666666</color>
+    <color name="text_color_light">#333333</color>
+    <color name="text_color_other">#2A2A2A</color>
+    <color name="search_border_normal">#ECECEC</color>
+    <color name="hint_text_color">#C6C6C6</color>
+
+    <color name="btn_disable_color">#50F08327</color>
+    <color name="btn_enable_pressed_color">#D07528</color>
+    <color name="btn_enable_normal_color">#F08327</color>
+
+    <color name="pink_dark">#FEF4EB</color>
+
+    <color name="color_blue">#4A90E2</color>
+    <color name="color_blue_dark">#007AFF</color>
+    <color name="color_green">#04BE02</color>
+
+
+    <color name="pay_border_color">#FFDDDDDD</color>
+    <color name="color_CCCCCCC">#CCCCCC</color>
+</resources>
