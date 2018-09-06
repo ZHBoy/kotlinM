@@ -1,4 +1,4 @@
-package com.hao.m.presenter
+package com.hao.m.ui.account.login
 
 import com.hao.m.bridge.retrofit.callback.HttpOnNextListener
 import com.hao.m.bridge.retrofit.http.HttpManager
@@ -19,13 +19,14 @@ class LoginPresenter(val mView: LoginContract.View) : LoginContract.Presenter {
             showProgress("加载中...")
             setOption(null)
             doHttpDeal(mView.getActivity(),
-                    createService(AccountService::class.java)!!.login(userId,pwd).apply {
+                    createService(AccountService::class.java)!!.login(userId, pwd).apply {
                         this.bindToLifecycle(mView.getActivity())
                     },
-                    object: HttpOnNextListener(){
+                    object : HttpOnNextListener() {
                         override fun onNext(json: String) {
                             mView.onLoginResult(json)
                         }
                     })
-        }    }
+        }
+    }
 }

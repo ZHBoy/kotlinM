@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hao.m.utils.Density;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 /**
@@ -40,7 +41,7 @@ public abstract class BaseFragment extends RxFragment {
     }
 
     public void base() {
-//        Density.setDefault(this.getActivity());
+        Density.INSTANCE.setDefault(this.getActivity());
     }
     protected <T extends View> T getViewById(int resId) {
         return this.view.findViewById(resId);

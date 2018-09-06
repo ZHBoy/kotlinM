@@ -45,7 +45,7 @@ greendao {
 }
 
 
-ext{
+ext {
     ankoLibVersion = "0.10.5"
     rxlifecycleVersion = "2.2.1"
     rxKotlinVersion = "2.1.0"
@@ -57,11 +57,14 @@ ext{
     constraintLayoutVersion = "1.1.0"
     glideVersion = "4.7.1"
     greendaoVersion = "3.2.2"
+    rxPermission = "0.10.2"
+    springViewVersion = "1.5.0"
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -72,6 +75,9 @@ dependencies {
     implementation "com.android.support:support-v4:$supportLibVersion"
     implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
     implementation 'com.android.support:multidex:1.0.3'
+
+    //bottom-navigation-bar
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.0.3'
 
     // Anko lib
     implementation "org.jetbrains.anko:anko-commons:$ankoLibVersion"
@@ -95,5 +101,10 @@ dependencies {
 
     //数据库
     implementation "org.greenrobot:greendao:$greendaoVersion"
+
+    // SpringView core library (only include DefaultHeader/Footer)
+    implementation "com.liaoinstan.springview:library:$springViewVersion"
+    //权限检测
+    implementation "com.github.tbruyelle:rxpermissions:$rxPermission"
 
 }

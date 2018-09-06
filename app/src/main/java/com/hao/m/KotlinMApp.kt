@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.support.multidex.MultiDexApplication
+import com.hao.m.utils.Density
 
 /**
  * Created by HaoBoy on 2018/6/12.
@@ -35,5 +36,7 @@ class KotlinMApp : MultiDexApplication() {
         super.onCreate()
         cxt = applicationContext
         res = cxt!!.resources
+
+        Density.setDensity(this)
     }
 }

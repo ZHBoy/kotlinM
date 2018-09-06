@@ -1,4 +1,4 @@
-package com.hao.m.bridge.retrofit
+package com.hao.m.widgets
 
 import android.app.Dialog
 import android.content.Context
@@ -45,7 +45,7 @@ object LoadingDialog {
      * @param msg
      * @return
      */
-    fun createLoadingDialog(context: Context, msg: String): Dialog {
+    private fun createLoadingDialog(context: Context, msg: String): Dialog {
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.dialog_progress, null)
         val layout = view.findViewById(R.id.dialog_view) as FrameLayout// 加载布局

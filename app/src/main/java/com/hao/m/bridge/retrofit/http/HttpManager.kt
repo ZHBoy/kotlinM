@@ -7,6 +7,8 @@ import com.hao.m.bridge.retrofit.callback.HttpOnNextListener
 import com.hao.m.bridge.retrofit.http.interceptor.CookieInterceptor
 import com.hao.m.bridge.retrofit.http.interceptor.PublicHeaderInterceptor
 import com.hao.m.utils.TLog
+import com.trello.rxlifecycle2.LifecycleProvider
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import com.xfs.fsyuncai.bridge.retrofit.http.RequestOption
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,6 +20,10 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
+import com.trello.rxlifecycle2.android.ActivityEvent
+import com.trello.rxlifecycle2.RxLifecycle.bindUntilEvent
+import com.trello.rxlifecycle2.kotlin.bindUntilEvent
+
 
 /**
  * Created by
@@ -57,6 +63,7 @@ class HttpManager private constructor() {
                         error("数据格式错误！")
                     it
                 }
+
                 .apply {
                     val apiResponse = if (option == null) {
                         ApiResponse(context, msg, RequestOption(), listener)
@@ -65,6 +72,7 @@ class HttpManager private constructor() {
                     }
                     option = null
                     this.subscribe(apiResponse)
+
                 }
     }
 
@@ -76,6 +84,7 @@ class HttpManager private constructor() {
         httpClientBuilder.readTimeout(5, TimeUnit.SECONDS)
         httpClientBuilder.writeTimeout(5, TimeUnit.SECONDS)
         httpClientBuilder.addInterceptor(PublicHeaderInterceptor())
+        //        httpClientBuilder.addInterceptor(PublicParamsInterceptor())//公共参数添加
         httpClientBuilder.addInterceptor(
                 CookieInterceptor(if (option == null) false else option!!.isCache,
                         if (option == null) "" else option!!.getUrl()))

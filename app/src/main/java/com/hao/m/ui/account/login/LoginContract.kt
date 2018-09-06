@@ -1,4 +1,4 @@
-package com.hao.m.presenter
+package com.hao.m.ui.account.login
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.hao.m.mvp.BasePresenter

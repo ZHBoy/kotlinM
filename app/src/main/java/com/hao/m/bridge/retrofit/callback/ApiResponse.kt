@@ -4,7 +4,7 @@ import android.content.Context
 import com.google.gson.Gson
 import com.hao.m.bridge.database.CookieDbUtil
 import com.hao.m.utils.TLog
-import com.hao.m.bridge.retrofit.LoadingDialog
+import com.hao.m.widgets.LoadingDialog
 import com.hao.m.bridge.retrofit.exception.ApiErrorModel
 import com.hao.m.bridge.retrofit.exception.ApiErrorType
 import com.xfs.fsyuncai.bridge.retrofit.http.RequestOption

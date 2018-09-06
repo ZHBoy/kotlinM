@@ -1,5 +1,6 @@
 package com.hao.m.utils
 
+import android.view.Gravity
 import android.widget.Toast
 import com.hao.m.KotlinMApp
 import org.jetbrains.anko.AnkoLogger
@@ -15,6 +16,17 @@ object ToastUtil : AnkoLogger {
 
     fun showToast(msg: String) {
         KotlinMApp.context().toast(msg)
+    }
+
+    fun showCustomToast(msg: String): Toast {
+        if (toast == null) {
+            toast = Toast.makeText(UIUtils.context(), msg, Toast.LENGTH_SHORT)
+        } else {
+            toast!!.setText(msg)
+        }
+        toast!!.show()
+        toast!!.setGravity(Gravity.CENTER, 0, 0)
+        return toast!!
     }
 
 //    /**

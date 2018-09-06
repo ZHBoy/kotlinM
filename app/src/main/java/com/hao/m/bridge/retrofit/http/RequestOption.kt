@@ -4,7 +4,7 @@ import android.text.TextUtils
 import com.hao.m.bridge.retrofit.ApiConstants
 
 /**
- * Created by kangf on 2018/6/16.
+ * Created by HaoBoy on 2018/6/16.
  */
 class RequestOption {
 
