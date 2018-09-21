@@ -1,18 +1,21 @@
 package com.hao.m.ui.main
 
-import com.hao.m.R
-import com.hao.m.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
 import android.view.Gravity
-import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
+import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.ashokvarma.bottomnavigation.ShapeBadgeItem
 import com.ashokvarma.bottomnavigation.TextBadgeItem
-import com.hao.m.extend.addFragment
-import com.hao.m.extend.replaceFragment
-import com.hao.m.ui.main.fragment.HomeFragment
-import com.hao.m.ui.main.fragment.PersonalFragment
-import org.jetbrains.anko.toast
+import com.hao.m.R
+import com.hao.m.adapter.NoDestroyViewPagerAdapter
+import com.hao.m.base.BaseActivity
+import com.hao.m.ui.main.home.HomeFragment
+import com.hao.m.ui.main.message.MessageFragment
+import com.hao.m.ui.main.personal.PersonalFragment
+import com.hao.m.ui.main.recommend.RecommendFragment
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 /**
@@ -20,11 +23,16 @@ import org.jetbrains.anko.toast
  *@date : 2018/9/6
  *@description : 主activity
  **/
-class MainActivity : BaseActivity(), BottomNavigationBar.OnTabSelectedListener {
+class MainActivity : BaseActivity(), BottomNavigationBar.OnTabSelectedListener , ViewPager.OnPageChangeListener{
+
+    private val fragments: ArrayList<Fragment> =  ArrayList()
 
     private val homeFragment: HomeFragment = HomeFragment.newInstance()
-
+    private val recommendFragment: RecommendFragment = RecommendFragment.newInstance()
+    private val messageFragment: MessageFragment = MessageFragment.newInstance()
     private val personalFragment: PersonalFragment = PersonalFragment.newInstance()
+
+    private var noDestroyViewPagerAdapter: NoDestroyViewPagerAdapter? = null
 
     private lateinit var numberBadgeItem: TextBadgeItem
 
@@ -36,14 +44,15 @@ class MainActivity : BaseActivity(), BottomNavigationBar.OnTabSelectedListener {
     override fun init() {
         setNumber()
         setBottomNavigationBar()
-        bottomNavigationBar.setTabSelectedListener(this)
         setFragment()
     }
 
     override fun logic() {
+        bottomNavigationBar.setTabSelectedListener(this)
+        viewPager.addOnPageChangeListener(this)
     }
 
-    private fun setBottomNavigationBar(){
+    private fun setBottomNavigationBar() {
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED)
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
 
@@ -59,8 +68,15 @@ class MainActivity : BaseActivity(), BottomNavigationBar.OnTabSelectedListener {
                 .setFirstSelectedPosition(0)//设置默认选择的按钮
                 .initialise()//所有的设置需在调用该方法前完成
     }
+
     private fun setFragment() {
-        addFragment(homeFragment, R.id.frameLayout)
+        fragments.add(homeFragment)
+        fragments.add(recommendFragment)
+        fragments.add(messageFragment)
+        fragments.add(personalFragment)
+        noDestroyViewPagerAdapter = NoDestroyViewPagerAdapter(supportFragmentManager)
+        noDestroyViewPagerAdapter!!.setItems(fragments)
+        viewPager.adapter = noDestroyViewPagerAdapter
     }
 
     private fun setNumber() {
@@ -82,25 +98,21 @@ class MainActivity : BaseActivity(), BottomNavigationBar.OnTabSelectedListener {
     override fun onTabUnselected(position: Int) {}
 
     override fun onTabSelected(position: Int) {
+        viewPager.currentItem = position
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {
+    }
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+    }
+
+    override fun onPageSelected(position: Int) {
         when (position) {
-            0 -> replaceHome()
-            3 -> replacePersonal()
-        }
-    }
-
-    private fun replacePersonal() {
-        if (!personalFragment.isVisible) {
-            replaceFragment(personalFragment, R.id.frameLayout)
-        } else {
-            toast("首页已经显示")
-        }
-    }
-
-    private fun replaceHome() {
-        if (!homeFragment.isVisible) {
-            replaceFragment(homeFragment, R.id.frameLayout)
-        } else {
-            toast("个人中心已经显示")
+            0 -> bottomNavigationBar.selectTab(0)
+            1 -> bottomNavigationBar.selectTab(1)
+            2 -> bottomNavigationBar.selectTab(2)
+            3 -> bottomNavigationBar.selectTab(3)
         }
     }
 

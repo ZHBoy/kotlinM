@@ -1,5 +1,7 @@
 package com.hao.m
 
+import io.reactivex.Observable
+import io.reactivex.functions.Consumer
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -70,6 +72,10 @@ class ExampleUnitTest {
         for(vt in v){
             print(vt)
         }
+    }
+    @Test
+    fun testJust(){
+        Observable.just(1, 2, 3).subscribe { integer -> println(integer) }
     }
 
 }

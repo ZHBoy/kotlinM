@@ -5,13 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_above="@+id/bottomNavigationBar"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNavigationBar"/>
 
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/bottomNavigationBar"

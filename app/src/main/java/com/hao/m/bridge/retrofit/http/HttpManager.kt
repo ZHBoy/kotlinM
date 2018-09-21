@@ -6,9 +6,8 @@ import com.hao.m.bridge.retrofit.callback.ApiResponse
 import com.hao.m.bridge.retrofit.callback.HttpOnNextListener
 import com.hao.m.bridge.retrofit.http.interceptor.CookieInterceptor
 import com.hao.m.bridge.retrofit.http.interceptor.PublicHeaderInterceptor
+import com.hao.m.entity.CommonResult
 import com.hao.m.utils.TLog
-import com.trello.rxlifecycle2.LifecycleProvider
-import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import com.xfs.fsyuncai.bridge.retrofit.http.RequestOption
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,13 +19,10 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
-import com.trello.rxlifecycle2.android.ActivityEvent
-import com.trello.rxlifecycle2.RxLifecycle.bindUntilEvent
-import com.trello.rxlifecycle2.kotlin.bindUntilEvent
 
 
 /**
- * Created by
+ * Created by HaoBoy
  */
 class HttpManager private constructor() {
 
@@ -49,9 +45,7 @@ class HttpManager private constructor() {
         return this
     }
 
-    fun doHttpDeal(context: Context,
-                   observable: Observable<String>,
-                   listener: HttpOnNextListener) {
+    fun <T>doHttpDeal(context: Context, observable: Observable<CommonResult<T>>, listener: HttpOnNextListener<T>) {
         observable
                 /*http请求线程*/
                 .subscribeOn(Schedulers.io())
@@ -59,7 +53,7 @@ class HttpManager private constructor() {
                 /*回调线程*/
                 .observeOn(AndroidSchedulers.mainThread())
                 .map {
-                    if (it.isEmpty())
+                    if (it.data == null)
                         error("数据格式错误！")
                     it
                 }

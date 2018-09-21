@@ -211,3 +211,13 @@
     public static ** valueOf(java.lang.String);
 }
 #友盟混淆配置end
+
+#BaseRecyclerViewAdapterHelper混淆
+-keep class com.chad.library.adapter.** {
+*;
+}
+-keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
+-keep public class * extends com.chad.library.adapter.base.BaseViewHolder
+-keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
+     <init>(...);
+}

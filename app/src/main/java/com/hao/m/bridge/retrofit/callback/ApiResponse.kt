@@ -2,13 +2,12 @@ package com.hao.m.bridge.retrofit.callback
 
 import android.content.Context
 import com.google.gson.Gson
-import com.hao.m.bridge.database.CookieDbUtil
-import com.hao.m.utils.TLog
-import com.hao.m.widgets.LoadingDialog
 import com.hao.m.bridge.retrofit.exception.ApiErrorModel
 import com.hao.m.bridge.retrofit.exception.ApiErrorType
+import com.hao.m.entity.CommonResult
+import com.hao.m.utils.TLog
+import com.hao.m.widgets.LoadingDialog
 import com.xfs.fsyuncai.bridge.retrofit.http.RequestOption
-import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
@@ -19,10 +18,10 @@ import java.net.UnknownHostException
 /**
  * Created by HaoBoy
  */
-class ApiResponse(private val context: Context,
+class ApiResponse<T>(private val context: Context,
                   private val msg: String,
                   private val option: RequestOption,
-                  private val listener: HttpOnNextListener?) : Observer<String> {
+                  private val listener: HttpOnNextListener<T>?) : Observer<CommonResult<T>> {
 
     override fun onComplete() {
         LoadingDialog.dissmiss()
@@ -30,23 +29,14 @@ class ApiResponse(private val context: Context,
 
     override fun onSubscribe(d: Disposable) {
         if (option.isShowProgress) LoadingDialog.show(context, msg)
-        if (option.isCache) {
-            val cookieResult = CookieDbUtil.instance.queryCookieBy(option.getUrl())
-            if (cookieResult != null) {
-                TLog.i("读取数据库${option.getUrl()}")
-                val time = (System.currentTimeMillis() - cookieResult.time) / 1000
-                if (time < option.cookieNetWorkTime) {
-                    listener?.onCache(cookieResult.result)
-                }
 
-                onComplete()
-            }
-
-        }
     }
 
-    override fun onNext(str: String) {
-        listener?.onNext(str)
+//    override fun onNext(str: String) {
+//        listener?.onNext(str)
+//    }
+
+    override fun onNext(t: CommonResult<T>) {
     }
 
     override fun onError(error: Throwable) {
@@ -55,38 +45,6 @@ class ApiResponse(private val context: Context,
             errorDo(error)
             return
         }
-        Observable.just(option.getUrl())
-                .subscribe(object : Observer<String> {
-                    override fun onComplete() {
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-                    }
-
-                    override fun onNext(t: String) {
-                        val cookieResult = CookieDbUtil.instance.queryCookieBy(t)
-                        if (cookieResult == null) {
-                            errorDo(error)
-                            return
-                        }
-                        val time = (System.currentTimeMillis() - cookieResult.time) / 1000
-                        if (time < option.cookieNoNetWorkTime) {
-                            listener?.onCache(cookieResult.result)
-                        } else {
-                            CookieDbUtil.instance.deleteCookie(cookieResult)
-                            errorDo(error)
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-                        errorDo(e)
-                        CookieDbUtil.instance.queryCookieBy(option.getUrl()).let {
-                            if (it != null) {
-                                CookieDbUtil.instance.deleteCookie(it)
-                            }
-                        }
-                    }
-                })
     }
 
     //服务器异常

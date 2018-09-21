@@ -1,4 +1,4 @@
-package com.hao.m.ui.main.fragment
+package com.hao.m.ui.main.personal
 
 import com.hao.m.R
 import com.hao.m.base.BaseFragment

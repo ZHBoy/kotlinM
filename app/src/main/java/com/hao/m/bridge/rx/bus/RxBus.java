@@ -1,8 +1,10 @@
 package com.hao.m.bridge.rx.bus;
 
 import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.processors.FlowableProcessor;
 import io.reactivex.processors.PublishProcessor;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by HaoBoy
@@ -25,7 +27,11 @@ public class RxBus {
     }
 
     public <T> Flowable<T> toFlowable(Class<T> tClass) {
-        return mBus.ofType(tClass);
+        return mBus.ofType(tClass)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                /*回调线程*/
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Flowable<Object> toFlowable() {

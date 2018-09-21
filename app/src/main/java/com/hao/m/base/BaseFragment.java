@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import com.hao.m.utils.Density;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
+import java.util.Objects;
+
 /**
  * Created by HaoBoy
  */
@@ -41,7 +43,7 @@ public abstract class BaseFragment extends RxFragment {
     }
 
     public void base() {
-        Density.INSTANCE.setDefault(this.getActivity());
+        Density.INSTANCE.setDefault(Objects.requireNonNull(this.getActivity()));
     }
     protected <T extends View> T getViewById(int resId) {
         return this.view.findViewById(resId);
