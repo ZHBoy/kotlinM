@@ -1,5 +1,6 @@
 package com.hao.m.utils
 
+import com.hao.m.KotlinMApp
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import kotlin.math.log
@@ -9,21 +10,13 @@ import kotlin.math.log
  */
 object TLog : AnkoLogger {
 
-    private val isOpenDebug = true
-
-    private val debugInfo = true
-    private val debugError = true
-
-
     fun i(msg: String) {
-        if (isOpenDebug && debugInfo) {
+        if(KotlinMApp.isDebug)
             info(msg)
-        }
-
     }
 
     fun i(msg: String,  count: Int) {
-        if (isOpenDebug && debugInfo) {
+        if(KotlinMApp.isDebug)
             if (msg.length > count) {
                 val show = msg.substring(0, count)
                 info(show)
@@ -37,14 +30,12 @@ object TLog : AnkoLogger {
             } else {
                 info(msg)
             }
-        }
 
     }
 
     fun e(msg: String) {
-        if (isOpenDebug && debugError)
+        if(KotlinMApp.isDebug)
             error(msg)
     }
-
 
 }

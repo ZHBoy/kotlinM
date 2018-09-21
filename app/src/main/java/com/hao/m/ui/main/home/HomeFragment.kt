@@ -5,9 +5,9 @@ import com.hao.m.R
 import com.hao.m.base.BaseFragment
 import com.hao.m.bridge.retrofit.http.HttpManager
 import com.hao.m.recyclerview.divider.SpaceItemDecoration
+import com.hao.m.utils.TLog
 import com.hao.m.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlin.collections.ArrayList
 
 class HomeFragment : BaseFragment() {
 
@@ -31,6 +31,7 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun init() {
+        TLog.i("log打印成功了")
         initData()
         mHomePersonalAdapter = HomePersonalAdapter(activity!!,dataList)
         //默认第一次加载会进入回调，如果不需要可以配置

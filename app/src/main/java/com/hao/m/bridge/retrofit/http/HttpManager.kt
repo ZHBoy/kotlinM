@@ -1,6 +1,7 @@
 package com.hao.m.bridge.retrofit.http
 
 import android.content.Context
+import com.hao.m.KotlinMApp
 import com.hao.m.bridge.retrofit.ApiConstants
 import com.hao.m.bridge.retrofit.callback.ApiResponse
 import com.hao.m.bridge.retrofit.callback.HttpOnNextListener
@@ -82,7 +83,7 @@ class HttpManager private constructor() {
         httpClientBuilder.addInterceptor(
                 CookieInterceptor(if (option == null) false else option!!.isCache,
                         if (option == null) "" else option!!.getUrl()))
-        if (ApiConstants.IS_DEBUG)
+        if (KotlinMApp.isDebug)
             httpClientBuilder.addInterceptor(getHttpLoggingInterceptor())
 
         val retrofitBuilder = Retrofit.Builder()

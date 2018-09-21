@@ -19,8 +19,42 @@ android {
     }
     buildTypes {
         release {
+
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
+            // 移除无用的resource文件
+            // shrinkResources true
+            // Zipalign优化
+            zipAlignEnabled true
+            // 混淆打包开关
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            aaptOptions.cruncherEnabled = false
+            aaptOptions.useNewCruncher = false
+
+
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+
+
+        }
+
+        debug {
+            // 移除无用的resource文件
+            shrinkResources false
+            // Zipalign优化
+            zipAlignEnabled true
+            // 混淆打包开关
+            minifyEnabled true
+
+            aaptOptions.cruncherEnabled = false
+            aaptOptions.useNewCruncher = false
+
+
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+
+
         }
     }
     configurations.all {
@@ -125,14 +159,10 @@ dependencies {
 
     //数据库
     implementation "org.greenrobot:greendao:$greendaoVersion"
-
-    // SpringView core library (only include DefaultHeader/Footer)
-    implementation "com.liaoinstan.springview:library:$springViewVersion"
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //adapter封装
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 
     //权限检测
     implementation "com.github.tbruyelle:rxpermissions:$rxPermission"
-
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 
 }

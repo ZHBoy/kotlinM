@@ -13,6 +13,7 @@ class KotlinMApp : MultiDexApplication() {
 
     companion object {
 
+        //控制debug模式
         const val isDebug = true
 
         @SuppressLint("StaticFieldLeak")
