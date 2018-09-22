@@ -1,15 +1,19 @@
 package com.hao.m.bridge.retrofit.callback
 
 import android.content.Context
+import android.text.TextUtils
 import com.google.gson.Gson
+import com.hao.m.AppManager
 import com.hao.m.bridge.retrofit.exception.ApiErrorModel
 import com.hao.m.bridge.retrofit.exception.ApiErrorType
 import com.hao.m.entity.CommonResult
+import com.hao.m.ui.account.login.LoginActivity
 import com.hao.m.utils.TLog
 import com.hao.m.widgets.LoadingDialog
 import com.xfs.fsyuncai.bridge.retrofit.http.RequestOption
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import org.jetbrains.anko.intentFor
 import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
@@ -29,22 +33,14 @@ class ApiResponse<T>(private val context: Context,
 
     override fun onSubscribe(d: Disposable) {
         if (option.isShowProgress) LoadingDialog.show(context, msg)
-
     }
-
-//    override fun onNext(str: String) {
-//        listener?.onNext(str)
-//    }
 
     override fun onNext(t: CommonResult<T>) {
     }
 
     override fun onError(error: Throwable) {
         LoadingDialog.dissmiss()
-        if (!option.isCache) {
-            errorDo(error)
-            return
-        }
+        errorDo(error)
     }
 
     //服务器异常
@@ -63,6 +59,7 @@ class ApiResponse<T>(private val context: Context,
                     ApiErrorType.PARSING_FAILURE.getApiErrorModel(context)
                 else -> otherError(e)
             }
+
             listener?.onError(e.code(), apiErrorModel)
             return
         }

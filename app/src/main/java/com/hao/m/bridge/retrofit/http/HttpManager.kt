@@ -5,7 +5,6 @@ import com.hao.m.KotlinMApp
 import com.hao.m.bridge.retrofit.ApiConstants
 import com.hao.m.bridge.retrofit.callback.ApiResponse
 import com.hao.m.bridge.retrofit.callback.HttpOnNextListener
-import com.hao.m.bridge.retrofit.http.interceptor.CookieInterceptor
 import com.hao.m.bridge.retrofit.http.interceptor.PublicHeaderInterceptor
 import com.hao.m.entity.CommonResult
 import com.hao.m.utils.TLog
@@ -80,9 +79,6 @@ class HttpManager private constructor() {
         httpClientBuilder.writeTimeout(5, TimeUnit.SECONDS)
         httpClientBuilder.addInterceptor(PublicHeaderInterceptor())
         //        httpClientBuilder.addInterceptor(PublicParamsInterceptor())//公共参数添加
-        httpClientBuilder.addInterceptor(
-                CookieInterceptor(if (option == null) false else option!!.isCache,
-                        if (option == null) "" else option!!.getUrl()))
         if (KotlinMApp.isDebug)
             httpClientBuilder.addInterceptor(getHttpLoggingInterceptor())
 
