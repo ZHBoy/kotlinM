@@ -16,6 +16,7 @@ class RxTimer {
     private var disposables: CompositeDisposable = CompositeDisposable()
 
     fun countDown(count: Long, listener: TimerListener?) {
+        if (count <= 0) return
         Observable.interval(0, 1, TimeUnit.SECONDS)
 
                 .subscribeOn(Schedulers.io())

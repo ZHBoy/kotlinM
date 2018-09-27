@@ -6,6 +6,11 @@
 
     <include layout="@layout/toolbar_common" />
 
+    <com.youth.banner.Banner
+        android:id="@+id/homeBanner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"

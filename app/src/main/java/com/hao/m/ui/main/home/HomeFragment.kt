@@ -5,11 +5,14 @@ import com.hao.m.R
 import com.hao.m.base.BaseFragment
 import com.hao.m.bridge.retrofit.http.HttpManager
 import com.hao.m.recyclerview.divider.SpaceItemDecoration
+import com.hao.m.ui.account.login.GlideImageLoader
 import com.hao.m.utils.TLog
 import com.hao.m.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment() {
+
+    private var list : ArrayList<Int> = ArrayList()
 
     private val PAGE_SIZE = 6
 
@@ -31,7 +34,15 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun init() {
-        TLog.i("log打印成功了")
+
+        //本地图片数据（资源文件）
+        list.add(R.mipmap.ic_launcher_round)
+        list.add(R.mipmap.ic_launcher)
+        list.add(R.mipmap.ic_launcher_round)
+
+        homeBanner.setImages(list)
+                .setImageLoader(GlideImageLoader())
+                .start()
         initData()
         mHomePersonalAdapter = HomePersonalAdapter(activity!!,dataList)
         //默认第一次加载会进入回调，如果不需要可以配置
