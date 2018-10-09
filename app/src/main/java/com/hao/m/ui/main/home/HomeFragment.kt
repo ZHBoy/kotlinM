@@ -1,18 +1,25 @@
 package com.hao.m.ui.main.home
 
+import android.content.res.AssetManager
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View.inflate
 import com.hao.m.R
 import com.hao.m.base.BaseFragment
 import com.hao.m.bridge.retrofit.http.HttpManager
+import com.hao.m.common.IntentDataDef
 import com.hao.m.recyclerview.divider.SpaceItemDecoration
 import com.hao.m.ui.account.login.GlideImageLoader
-import com.hao.m.utils.TLog
+import com.hao.m.ui.detail.HeroDetailActivity
 import com.hao.m.utils.ToastUtil
+import com.youth.banner.Banner
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.jetbrains.anko.intentFor
+import java.util.zip.Inflater
+import android.view.LayoutInflater
+import android.widget.LinearLayout
+
 
 class HomeFragment : BaseFragment() {
-
-    private var list : ArrayList<Int> = ArrayList()
 
     private val PAGE_SIZE = 6
 
@@ -28,24 +35,22 @@ class HomeFragment : BaseFragment() {
 
     private fun initData() {
         var start = Math.random().toInt()
-        for (i in start..start+10){
+        for (i in start..start + 10) {
             dataList.add(i.toString())
         }
     }
 
     override fun init() {
-
+        val content = LayoutInflater.from(activity).inflate(R.layout.header_home, null) as LinearLayout
+        val banner = content.findViewById<Banner>(R.id.homeBanner)
         //本地图片数据（资源文件）
-        list.add(R.mipmap.ic_launcher_round)
-        list.add(R.mipmap.ic_launcher)
-        list.add(R.mipmap.ic_launcher_round)
-
-        homeBanner.setImages(list)
+        banner.setImages(getBanners())
                 .setImageLoader(GlideImageLoader())
                 .start()
         initData()
-        mHomePersonalAdapter = HomePersonalAdapter(activity!!,dataList)
-        //默认第一次加载会进入回调，如果不需要可以配置
+        mHomePersonalAdapter = HomePersonalAdapter(activity!!, dataList)
+
+        mHomePersonalAdapter.setHeaderView(content)
         rvAddressData.layoutManager = LinearLayoutManager(activity)
         rvAddressData.addItemDecoration(SpaceItemDecoration(1))
         rvAddressData.adapter = mHomePersonalAdapter
@@ -57,11 +62,14 @@ class HomeFragment : BaseFragment() {
         mHomePersonalAdapter.let {
             it.setOnItemClickListener { _, _, position ->
                 ToastUtil.showCustomToast("点击了：$position")
+                startActivity(activity!!.intentFor<HeroDetailActivity>(
+                        IntentDataDef.HERO_INFO_KEY to dataList[position]
+                ))
             }
             it.setOnLoadMoreListener({
                 val isRefresh = mNextRequestPage == 1
-                setData(isRefresh,dataList)
-            },rvAddressData)
+                setData(isRefresh, dataList)
+            }, rvAddressData)
         }
 
 
@@ -74,6 +82,11 @@ class HomeFragment : BaseFragment() {
 //                        }
 //                    })
 //        }
+    }
+
+    private fun getBanners(): List<String> {
+        val banners = activity?.assets?.list("")?.asList()
+        return banners!!
     }
 
     private fun setData(isRefresh: Boolean, data: List<String>?) {

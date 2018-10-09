@@ -17,6 +17,7 @@ android {
         flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
 
@@ -46,7 +47,7 @@ android {
             // Zipalign优化
             zipAlignEnabled true
             // 混淆打包开关
-            minifyEnabled true
+            minifyEnabled false
 
             aaptOptions.cruncherEnabled = false
             aaptOptions.useNewCruncher = false
@@ -90,6 +91,7 @@ android {
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
+
 
 }
 

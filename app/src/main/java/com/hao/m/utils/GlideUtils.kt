@@ -12,10 +12,10 @@ import com.hao.m.widgets.CircularBitmapImageViewTarget
 *@date : 2018/9/27
 *@description :glide图片加载，单例
 **/
-class ImageLoader private constructor() {
+class GlideUtils private constructor() {
 
     companion object {
-        val instance: ImageLoader by lazy { ImageLoader() }
+        val instance: GlideUtils by lazy { GlideUtils() }
     }
 
     /**

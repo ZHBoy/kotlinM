@@ -3,6 +3,8 @@ package com.hao.m.bridge.retrofit.http.interceptor
 import android.util.Log
 import com.hao.m.KotlinMApp
 import com.hao.m.utils.DevicesUtils
+import com.hao.m.utils.StringUtils
+import com.hao.m.utils.TLog
 import okhttp3.*
 import okio.Buffer
 import java.io.IOException
@@ -49,7 +51,23 @@ class PublicParamsInterceptor : Interceptor {
                     postBodyString += (if (postBodyString.isNotEmpty()) "&" else "") + bodyToString(formBody)
                     newRequestBuild!!.post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"), postBodyString))
                 }
-                else -> newRequestBuild = oldRequest.newBuilder()
+                else -> {
+                    val oldMap = StringUtils.parseJSON2Map(bodyToString(oldBody))
+                    //不传参数的情况
+                    if (oldMap == null || oldMap.isEmpty()) {
+                        newRequestBuild = oldRequest.newBuilder()
+                    } else {
+                        val map3 = HashMap<String, Any?>()
+                        map3.putAll(map)
+                        map3.putAll(oldMap)
+                        postBodyString = StringUtils.getIntGson().toJson(map3)
+                        val lb = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), postBodyString)
+                        newRequestBuild = oldRequest.newBuilder()
+                        newRequestBuild.post(lb)
+                    }
+                    newRequestBuild = oldRequest.newBuilder()
+                    TLog.i("oldBody---postBodyString----$postBodyString")
+                }
             }
         } else {
             // 添加新的参数

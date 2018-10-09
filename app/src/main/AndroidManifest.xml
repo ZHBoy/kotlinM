@@ -13,6 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:windowSoftInputMode="stateHidden|adjustResize"
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.account.login.LoginActivity"
@@ -24,6 +25,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity" android:launchMode="singleTask"/>
+
+        <activity android:name=".ui.detail.HeroDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
+
     </application>
 
 </manifest>
